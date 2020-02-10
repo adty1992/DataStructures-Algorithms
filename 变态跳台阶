@@ -1,0 +1,39 @@
+题目：
+一只青蛙一次可以跳上1级台阶，也可以跳上2级……它也可以跳上n级。求该青蛙跳上一个n级的台阶总共有多少种跳法。
+
+题解：
+设青蛙跳上n级台阶的跳法为f(n)，则有：
+f(1) = 1; [1]
+f(2) = 2; [1+1, 2]
+f(3) = 4; [1+1+1, 1+2, 2+1, 3]
+f(4) = 8; [1+1+1+1, 1+1+2, 1+2+1, 1+3, 2+1+1, 2+2, 3+1, 4]
+可以得出规律如下：
+f(n) = f(1) + f(2) + ... + f(n-1) + 1
+
+代码：
+class Solution {
+public:
+    int jumpFloorII(int number) {
+        if(number < 0) return 0;
+        if(number == 1) return 1;
+        
+        // 初始化容器
+        vector<int> docker;
+        docker.push_back(0);
+        docker.push_back(1);
+        
+        // 填装容器
+        for(int i = 2; i <= number; i++)
+        {
+            int rst = 0;
+            for(int j = 1; j < i; j++)
+            {
+                rst += docker[j];
+            }
+            rst += 1;
+            docker.push_back(rst);
+        }
+        
+        return docker[number];
+    }
+};
