@@ -1,0 +1,37 @@
+题目：
+在一个二维数组中（每个一维数组的长度相同），每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。
+
+题解：
+行列两个方向都是递增。
+起始点设为右上角，分别往下/往左移动寻找目标数。
+
+代码：
+class Solution {
+public:
+    bool Find(int target, vector<vector<int> > array) {
+        int row = array.size();
+        int col = array[0].size();
+        
+        int x = col-1;
+        int y = 0;
+        
+        while(x >= 0 && y < row)
+        {
+            int cur = array[y][x];
+            if(target < cur)
+            {
+                x--;
+            }
+            else if(target > cur)
+            {
+                y++;
+            }
+            else
+            {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+};
