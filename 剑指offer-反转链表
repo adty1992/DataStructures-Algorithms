@@ -1,0 +1,43 @@
+题目：
+输入一个链表，反转链表后，输出新链表的表头。
+
+题解：
+关键是要保存断链之前当前节点的下一节点。
+1. 暂存下一节点；
+2. 断链，cur->next = father，令当前节点指向其上一节点
+3. 更新节点，father = cur; cur = next; 并返回1
+
+代码：
+/*
+struct ListNode {
+	int val;
+	struct ListNode *next;
+	ListNode(int x) :
+			val(x), next(NULL) {
+	}
+};*/
+class Solution {
+public:
+    ListNode* ReverseList(ListNode* pHead) {
+        if(pHead == nullptr || pHead->next == nullptr)
+            return pHead;
+        
+        // 初始化变量
+        ListNode* cur = pHead;
+        ListNode* father = nullptr;
+        ListNode* next = pHead->next;
+        
+        while(nullptr != next)
+        {
+            // 暂存next节点（断开链接之前一定要暂存下一节点，否则会找不到）
+            next = cur->next;
+            // 将当前节点的下一节点指向其父节点
+            cur->next = father;
+            // 更新
+            father = cur;
+            cur = next;
+        }
+        
+        return father;
+    }
+};
